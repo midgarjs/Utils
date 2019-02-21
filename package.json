@@ -1,0 +1,10 @@
+{
+  "name": "@midgar/utils",
+  "version": "1.0.0-alpha.1.2",
+  "description": "Async utils function",
+  "main": "utils.js",
+  "scripts": {},
+  "author": "Metais Fabien",
+  "license": "MIT",
+  "dependencies": {}
+}
