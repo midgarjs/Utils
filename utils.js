@@ -192,16 +192,30 @@ const objectByString = function(o, s) {
   return o;
 }
 
-/**
- * Async file exists
- * @param {*} filepath 
- */
-const asyncFileExists = function (filepath) {
+function _asyncAccess(filepath, mode) {
   return new Promise((resolve, reject) => {
-    fs.access(filepath, fs.F_OK, error => {
+    fs.access(filepath, mode, error => {
       resolve(!error);
     })
   })
+}
+
+/**
+ * Async file exists
+ * 
+ * @param {*} filepath 
+ */
+const asyncFileExists = function (filepath) {
+  return _asyncAccess(filepath, fs.F_OK)
+}
+
+/**
+ * Async file exists
+ * 
+ * @param {*} filepath 
+ */
+const asyncIsWritable = function (filepath) {
+  return _asyncAccess(filepath, fs.W_OK)
 }
 
 /**
@@ -269,8 +283,6 @@ function asyncRequireResolve(path) {
   })
 }
 
-
-
 module.exports = {
   assignRecursive,
   objectPromises,
@@ -279,11 +291,14 @@ module.exports = {
   isObject, 
   objectByString,
   asyncFileExists,
+  asyncIsWritable,
   asyncLstat,
   asyncRmDir,
-  asyncMkdir: promisify(fs.mkdirSync),
+  asyncMkdir: promisify(fs.mkdir),
   asyncStat: promisify(fs.stat),
   asyncReaddir: promisify(fs.readdir),
   asyncWriteFile: promisify(fs.writeFile),
+  asyncReadFile: promisify(fs.readFile),
   asyncRequire,
-  asyncRequireResolve}
+  asyncRequireResolve
+}
