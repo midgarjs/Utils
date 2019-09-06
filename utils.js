@@ -83,6 +83,12 @@ let objectPromises = async (object) => {
   })
 }
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+
 /**
  * Async map can return Array or object
  * 
@@ -286,6 +292,7 @@ function asyncRequireResolve(path) {
 module.exports = {
   assignRecursive,
   objectPromises,
+  asyncForEach,
   asyncMap,
   timer: new Timer,
   isObject, 
