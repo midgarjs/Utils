@@ -9,20 +9,34 @@ class Timer{
     this.times = {}
   }
 
+  /**
+   * Save the hrtime to start a timer
+   * 
+   * @param {String} id Timer id
+   */
   start(id) {
     this.times[id] = process.hrtime()
   }
 
-  getTime (id) {
+  /**
+   * Get a timer eslaped time 
+   * 
+   * @param {String} id Timer id
+   * 
+   * @returns {String}
+   */
+  getTime (id, precision = 3) {
     if(!this.times[id]) 
-      throw new Error('invalid id')
+      throw new Error('invalid timer id')
 
 
     let hrtime = process.hrtime(this.times[id])
-    const precision = 3; // 3 decimal places
-    let elapsed = hrtime[1] / 1000000; // divide by a million to get nano to milli
+    
+    let ms = hrtime[1] / 1000000 // divide by a million to get nano to milli
 
-    return [hrtime[0], elapsed.toFixed(precision)]
+    const s = hrtime[0]
+    const elapsed = s*1000 + ms
+    return elapsed.toFixed(precision)
   }
 }
 
